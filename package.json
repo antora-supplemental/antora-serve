@@ -1,0 +1,60 @@
+{
+  "name": "@antora-supplemental/serve",
+  "version": "0.1.0",
+  "description": "Local Antora development server: generate, serve, watch local content sources, live-reload the browser. Not a fork of Antora core.",
+  "license": "MPL-2.0",
+  "author": "Ryan Johnson (https://github.com/AMDphreak)",
+  "keywords": [
+    "antora",
+    "livereload",
+    "hot-reload",
+    "dev-server",
+    "documentation"
+  ],
+  "homepage": "https://github.com/antora-supplemental/antora-serve",
+  "bugs": {
+    "url": "https://github.com/antora-supplemental/antora-serve/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/antora-supplemental/antora-serve.git"
+  },
+  "bin": {
+    "antora-serve": "bin/antora-serve.js"
+  },
+  "main": "lib/serve.js",
+  "files": [
+    "bin/**/*",
+    "lib/**/*",
+    "README.adoc",
+    "CHANGELOG.adoc",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "test": "node --test test/*.test.js",
+    "serve:demo": "node bin/antora-serve.js test/fixtures/playbook.yml --port 5252"
+  },
+  "peerDependencies": {
+    "@antora/playbook-builder": ">=3.1.0",
+    "@antora/site-generator": ">=3.1.0",
+    "@antora/user-require-helper": ">=3.0.0"
+  },
+  "peerDependenciesMeta": {
+    "@antora/playbook-builder": {
+      "optional": false
+    },
+    "@antora/site-generator": {
+      "optional": false
+    }
+  },
+  "devDependencies": {
+    "@antora/playbook-builder": "^3.1.15",
+    "@antora/site-generator": "^3.1.15",
+    "@antora/user-require-helper": "^3.0.0",
+    "antora": "^3.1.15"
+  },
+  "packageManager": "pnpm@10.33.0"
+}

@@ -1,0 +1,13 @@
+= Changelog
+
+This document tracks published releases. Detail files live under `changelog-details/` when needed.
+
+== Timeline
+
+* link:changelog-details/2026-07-25%20-%20initial%20serve%20cli.adoc[2026-07-25 — Initial serve CLI (v0.1.0)]
+
+== [0.1.0]
+
+* First standalone `@antora-supplemental/serve` release.
+* `antora-serve <playbook>`: generate, HTTP serve, watch local sources, SSE live-reload.
+* Improvements over the closed Antora core MR: SSE (not 1s poll), rebuild queue coalescing, `start_paths`, skip output/cache/.git, indexify static fallback, peer-deps on upstream Antora (no core fork).

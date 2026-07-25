@@ -1,0 +1,9 @@
+= 2026-07-25 — Initial serve CLI
+
+Recreate the rejected Antora `serve` feature as an org package so authors can preview the *composed* site without IntelliJ or UI-only gulp reload.
+
+== Changes
+
+* Port watch/serve logic out of `@antora/cli` into `@antora-supplemental/serve`.
+* Peer-depend on `@antora/playbook-builder` + `@antora/site-generator` so upstream Antora updates flow through normal dependency bumps (Dependabot).
+* SSE live-reload, coalesced rebuilds, `start_paths`, ignore `build`/`.cache`/`.git`.

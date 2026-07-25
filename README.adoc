@@ -1,0 +1,61 @@
+= @antora-supplemental/serve
+:toc:
+:toc-title: Contents
+
+Local Antora development server: **generate → serve → watch local sources → live-reload**.
+This is the feature core Antora rejected as `antora serve` (see https://gitlab.com/antora/antora/-/issues/1202[#1202] / https://gitlab.com/antora/antora/-/merge_requests/1109[!1109]), shipped as a standalone CLI that tracks upstream Antora via peer dependencies.
+
+Status:: v0.1 — full regenerate on change (correct, not incremental). Remote git content sources are not polled.
+
+== Why this exists
+
+Antora's composed multi-repo site *is* the product authors need to preview.
+IDE single-file AsciiDoc preview and UI-bundle gulp reload do not replace that.
+Upstream prefers an unimplemented CLI plugin system over a small `serve` command in core; this package fills the gap without forking Antora.
+
+== Install
+
+Requires Node 18+ and Antora 3.1+ already in the project (peer dependency).
+
+[source,shell]
+----
+pnpm add -D @antora-supplemental/serve antora
+----
+
+Until the first npm publish, install from git:
+
+[source,shell]
+----
+pnpm add -D github:antora-supplemental/antora-serve antora
+----
+
+== Usage
+
+[source,shell]
+----
+pnpm exec antora-serve antora-playbook.yml
+pnpm exec antora-serve antora-playbook.yml --port 5050
+pnpm exec antora-serve antora-playbook.yml --fetch --stacktrace
+----
+
+Open http://localhost:5252/ (default port). Edit a local `.adoc` / playbook / local UI path; the site rebuilds and the browser reloads via Server-Sent Events.
+
+=== What is watched
+
+* The playbook file
+* Content sources whose `url` is a **local path** (worktree / relative dir), including `start_path` / `start_paths`
+* Local UI bundle path and supplemental UI dirs when configured as filesystem paths
+
+Remote `https://…` / `git@…` sources are ignored by the watcher (same limitation Dan cited — this tool does not pretend otherwise).
+
+=== What is not incremental
+
+Each change runs a **full** `generateSite`. Correct for xrefs/nav; slower on huge sites. Incremental rebuild is a separate problem (see project docs / future work).
+
+== Changelog
+
+See link:CHANGELOG.adoc[CHANGELOG.adoc].
+
+== License
+
+MPL-2.0 (same family as Antora). Derived from the closed core MR approach, reimplemented as a standalone package with SSE reload, rebuild coalescing, `start_paths`, and output-dir exclusion.
