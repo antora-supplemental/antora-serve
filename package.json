@@ -46,8 +46,7 @@
   "peerDependencies": {
     "@antora/playbook-builder": ">=3.1.0",
     "@antora/site-generator": ">=3.1.0",
-    "@antora/user-require-helper": ">=3.0.0",
-    "@antora-supplemental/incremental": ">=0.1.0"
+    "@antora/user-require-helper": ">=3.0.0"
   },
   "peerDependenciesMeta": {
     "@antora/playbook-builder": {
@@ -55,9 +54,6 @@
     },
     "@antora/site-generator": {
       "optional": false
-    },
-    "@antora-supplemental/incremental": {
-      "optional": true
     }
   },
   "packageManager": "pnpm@10.33.0"
