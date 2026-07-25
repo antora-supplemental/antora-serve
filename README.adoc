@@ -24,13 +24,20 @@ Requires Node 18+ and Antora 3.1+ already in the project (peer dependency).
 pnpm add -D @antora-supplemental/serve antora
 ----
 
-Until the first npm publish (requires org `NPM_TOKEN` on the Release workflow), install from git:
+Until npm trusted publishing is configured for this package, install from git:
 
 [source,shell]
 ----
 pnpm add -D github:antora-supplemental/antora-serve antora
 # optional dirty-set support:
 pnpm add -D github:antora-supplemental/antora-incremental
+----
+
+After the first successful OIDC publish (`release.yml` + npm Trusted publisher), prefer:
+
+[source,shell]
+----
+pnpm add -D @antora-supplemental/serve antora
 ----
 
 == Usage

@@ -12,7 +12,7 @@ on:
 
 permissions:
   contents: write
-  id-token: write
+  id-token: write # npm trusted publishing (OIDC) — no NPM_TOKEN
 
 env:
   RELEASE_TAG: ${{ github.event_name == 'workflow_dispatch' && format('v{0}', inputs.version) || github.ref_name }}
@@ -48,10 +48,16 @@ jobs:
             exit 1
           fi
 
+      # Trusted publisher on npmjs.com (package → Access → Trusted publisher):
+      #   Provider: GitHub Actions
+      #   Organization: antora-supplemental
+      #   Repository: antora-serve
+      #   Workflow filename: release.yml
+      # Requires npm CLI ≥ 11.5.1 (Node 24). No NPM_TOKEN.
       - name: Publish to npm
-        run: pnpm publish --access public --no-git-checks
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          npm install -g npm@latest
+          npm publish --access public --provenance
 
       - name: Create GitHub Release
         env:
