@@ -41,7 +41,6 @@
     "@antora/playbook-builder": "^3.1.15",
     "@antora/site-generator": "^3.1.15",
     "@antora/user-require-helper": "^3.0.0",
-    "@antora-supplemental/incremental": "file:../antora-incremental",
     "antora": "^3.1.15"
   },
   "peerDependencies": {

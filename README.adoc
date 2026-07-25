@@ -24,11 +24,13 @@ Requires Node 18+ and Antora 3.1+ already in the project (peer dependency).
 pnpm add -D @antora-supplemental/serve antora
 ----
 
-Until the first npm publish, install from git:
+Until the first npm publish (requires org `NPM_TOKEN` on the Release workflow), install from git:
 
 [source,shell]
 ----
 pnpm add -D github:antora-supplemental/antora-serve antora
+# optional dirty-set support:
+pnpm add -D github:antora-supplemental/antora-incremental
 ----
 
 == Usage
@@ -48,11 +50,15 @@ Open http://localhost:5252/ (default port). Edit a local `.adoc` / playbook / lo
 * Content sources whose `url` is a **local path** (worktree / relative dir), including `start_path` / `start_paths`
 * Local UI bundle path and supplemental UI dirs when configured as filesystem paths
 
+=== Incremental (optional)
+
+When `@antora-supplemental/incremental` is installed and the playbook registers that extension, the first build writes `.antora-deps.json`. Later watch rebuilds compute a dirty set and reuse prior HTML for clean pages (full fallback on playbook/UI/`antora.yml` changes).
+
+Architecture: https://github.com/antora-supplemental/docs/blob/main/docs/modules/ROOT/pages/site-rebuild.adoc[`site-rebuild.adoc`].
+
+=== What is not watched
+
 Remote `https://…` / `git@…` sources are ignored by the watcher (same limitation Dan cited — this tool does not pretend otherwise).
-
-=== What is not incremental
-
-Each change runs a **full** `generateSite`. Correct for xrefs/nav; slower on huge sites. Incremental rebuild is a separate problem (see project docs / future work).
 
 == Changelog
 
