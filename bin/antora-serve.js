@@ -77,9 +77,32 @@ async function main (argv = process.argv.slice(2)) {
   const log = (msg) => process.stdout.write(`[antora-serve] ${msg}\n`)
   const logErr = (msg) => process.stderr.write(`[antora-serve] ${msg}\n`)
 
-  const runGenerate = async () => {
+  const incremental = tryLoadIncremental()
+  if (incremental) {
+    log('Incremental package detected — dirty-set rebuilds enabled when manifest exists.')
+  } else {
+    const remoteCount = (playbook.content?.sources || []).filter((s) => {
+      const u = s.url || ''
+      return /^https?:\/\//i.test(u) || String(u).startsWith('git@')
+    }).length
+    if (remoteCount) {
+      log(`Note: ${remoteCount} remote content source(s) are not watched (local worktrees only).`)
+    }
+  }
+
+  const dirtyFile = ospath.join(outputDir, '.antora-dirty.json')
+  const manifestFile = ospath.join(outputDir, '.antora-deps.json')
+
+  const runGenerate = async (changedPaths = []) => {
     const started = Date.now()
-    log('Generating site…')
+    prepareIncrementalEnv(incremental, {
+      outputDir,
+      manifestFile,
+      dirtyFile,
+      changedPaths,
+      log,
+    })
+    log(changedPaths.length ? `Generating site (changes: ${changedPaths.length})…` : 'Generating site…')
     try {
       await generateSite()
       log(`Generate ok (${Date.now() - started}ms)`)
@@ -87,6 +110,8 @@ async function main (argv = process.argv.slice(2)) {
     } catch (err) {
       logErr(`Generate failed; keeping previous output. ${err.message || err}`)
       return false
+    } finally {
+      clearIncrementalEnv()
     }
   }
 
@@ -97,8 +122,8 @@ async function main (argv = process.argv.slice(2)) {
   }
 
   const server = createServer(outputDir)
-  const queue = createRebuildQueue(async () => {
-    const success = await runGenerate()
+  const queue = createRebuildQueue(async (changedPaths) => {
+    const success = await runGenerate(changedPaths || [])
     if (success) server.bumpReload()
   })
 
@@ -106,7 +131,9 @@ async function main (argv = process.argv.slice(2)) {
   log(`Watching ${paths.length} path(s):`)
   for (const p of paths) log(`  - ${p}`)
 
-  const stopWatching = watchPaths(paths, () => queue.kick(), 600)
+  const stopWatching = watchPaths(paths, (batch) => {
+    queue.kick(batch || [])
+  }, 600)
 
   await new Promise((resolve, reject) => {
     server.once('error', reject)
@@ -123,8 +150,51 @@ async function main (argv = process.argv.slice(2)) {
   process.on('SIGINT', shutdown)
   process.on('SIGTERM', shutdown)
 
-  // Keep event loop alive
   await new Promise(() => {})
+}
+
+function tryLoadIncremental () {
+  try {
+    return {
+      computeDirtySet: require('@antora-supplemental/incremental/lib/dirty.js').computeDirtySet,
+      loadManifest: require('@antora-supplemental/incremental/lib/dirty.js').loadManifest,
+    }
+  } catch (_) {
+    try {
+      // Monorepo / file: sibling
+      const path = require('node:path')
+      return {
+        computeDirtySet: require(path.join(__dirname, '../../antora-incremental/lib/dirty.js')).computeDirtySet,
+        loadManifest: require(path.join(__dirname, '../../antora-incremental/lib/dirty.js')).loadManifest,
+      }
+    } catch {
+      return null
+    }
+  }
+}
+
+function prepareIncrementalEnv (incremental, { outputDir, manifestFile, dirtyFile, changedPaths, log }) {
+  clearIncrementalEnv()
+  if (!incremental || !changedPaths?.length || !fsExists(manifestFile)) return
+  try {
+    const manifest = incremental.loadManifest(manifestFile)
+    const dirty = incremental.computeDirtySet(manifest, changedPaths)
+    require('node:fs').writeFileSync(dirtyFile, JSON.stringify(dirty, null, 2))
+    process.env.ANTORA_INCREMENTAL_DIRTY_FILE = dirtyFile
+    process.env.ANTORA_INCREMENTAL_PRIOR_SITE = outputDir
+    log(
+      dirty.forceFull
+        ? `Incremental: force full convert (${changedPaths.length} path(s))`
+        : `Incremental: dirty pages=${dirty.pages.length} navDirty=${dirty.navDirty}`
+    )
+  } catch (err) {
+    log(`Incremental dirty-set failed; full generate. ${err.message}`)
+  }
+}
+
+function clearIncrementalEnv () {
+  delete process.env.ANTORA_INCREMENTAL_DIRTY_FILE
+  delete process.env.ANTORA_INCREMENTAL_PRIOR_SITE
 }
 
 function parseArgs (argv) {
@@ -176,6 +246,10 @@ Any other flags are forwarded to Antora (e.g. --fetch, --stacktrace, -a attr=val
 
 Only local content sources (filesystem / worktree URLs) are watched. Remote
 https:// git sources are not polled — that is intentional for this tool.
+
+When `@antora-supplemental/incremental` is installed and `.antora-deps.json`
+exists from a prior build, rebuilds use a dirty-set (partial convert) with
+full-generate fallback. Architecture: docs hub `site-rebuild.adoc`.
 `)
 }
 

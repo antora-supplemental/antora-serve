@@ -5,7 +5,9 @@
 Local Antora development server: **generate → serve → watch local sources → live-reload**.
 This is the feature core Antora rejected as `antora serve` (see https://gitlab.com/antora/antora/-/issues/1202[#1202] / https://gitlab.com/antora/antora/-/merge_requests/1109[!1109]), shipped as a standalone CLI that tracks upstream Antora via peer dependencies.
 
-Status:: v0.1 — full regenerate on change (correct, not incremental). Remote git content sources are not polled.
+Status:: v0.1 — local watch + live reload. With `@antora-supplemental/incremental`, dirty-set partial reconvert when a prior `.antora-deps.json` exists (else full regenerate). Remote git content sources are not polled.
+
+Architecture (link from PRs):: docs hub page `site-rebuild.adoc` (Site rebuild v1/v2).
 
 == Why this exists
 
