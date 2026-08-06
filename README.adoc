@@ -1,6 +1,33 @@
+ifndef::env-github[:icons: font]
+:toc: preamble
+:toclevels: 2
+:sectanchors:
+endif::[]
+
+ifndef::env-github[]
+image:https://img.shields.io/github/contributors/antora-supplemental/antora-serve.svg?style=for-the-badge[Contributors,link=https://github.com/antora-supplemental/antora-serve/graphs/contributors]
+image:https://img.shields.io/github/forks/antora-supplemental/antora-serve.svg?style=for-the-badge[Forks,link=https://github.com/antora-supplemental/antora-serve/network/members]
+image:https://img.shields.io/github/stars/antora-supplemental/antora-serve.svg?style=for-the-badge[Stars,link=https://github.com/antora-supplemental/antora-serve/stargazers]
+image:https://img.shields.io/github/issues/antora-supplemental/antora-serve.svg?style=for-the-badge[Issues,link=https://github.com/antora-supplemental/antora-serve/issues]
+image:https://img.shields.io/github/license/antora-supplemental/antora-serve.svg?style=for-the-badge[License,link=https://github.com/antora-supplemental/antora-serve/blob/main/LICENSE]
+endif::[]
+
+ifdef::env-github[]
+image:https://img.shields.io/github/contributors/antora-supplemental/antora-serve.svg?style=for-the-badge[Contributors]
+image:https://img.shields.io/github/forks/antora-supplemental/antora-serve.svg?style=for-the-badge[Forks]
+image:https://img.shields.io/github/stars/antora-supplemental/antora-serve.svg?style=for-the-badge[Stars]
+image:https://img.shields.io/github/issues/antora-supplemental/antora-serve.svg?style=for-the-badge[Issues]
+image:https://img.shields.io/github/license/antora-supplemental/antora-serve.svg?style=for-the-badge[License]
+endif::[]
+
 = @antora-supplemental/serve
-:toc:
-:toc-title: Contents
+
+Local Antora generate+serve+watch with live reload (standalone; not a core fork).
+
+link:https://github.com/antora-supplemental/antora-serve/issues[Report Bug] ·
+link:https://github.com/antora-supplemental/antora-serve/issues[Request Feature]
+
+== About The Project
 
 Local Antora development server: **generate → serve → watch local sources → live-reload**.
 This is the feature core Antora rejected as `antora serve` (see https://gitlab.com/antora/antora/-/issues/1202[#1202] / https://gitlab.com/antora/antora/-/merge_requests/1109[!1109]), shipped as a standalone CLI that tracks upstream Antora via peer dependencies.
@@ -9,13 +36,11 @@ Status:: v0.1 — local watch + live reload. With `@antora-supplemental/incremen
 
 Architecture (link from PRs):: docs hub page `site-rebuild.adoc` (Site rebuild v1/v2).
 
-== Why this exists
-
 Antora's composed multi-repo site *is* the product authors need to preview.
 IDE single-file AsciiDoc preview and UI-bundle gulp reload do not replace that.
 Upstream prefers an unimplemented CLI plugin system over a small `serve` command in core; this package fills the gap without forking Antora.
 
-== Install
+== Installation
 
 Requires Node 18+ and Antora 3.1+ already in the project (peer dependency).
 
@@ -67,10 +92,13 @@ Architecture: https://github.com/antora-supplemental/docs/blob/main/docs/modules
 
 Remote `https://…` / `git@…` sources are ignored by the watcher (same limitation Dan cited — this tool does not pretend otherwise).
 
-== Changelog
-
-See link:CHANGELOG.adoc[CHANGELOG.adoc].
-
 == License
 
-MPL-2.0 (same family as Antora). Derived from the closed core MR approach, reimplemented as a standalone package with SSE reload, rebuild coalescing, `start_paths`, and output-dir exclusion.
+MPL-2.0 (same family as Antora). Derived from the closed core MR approach, reimplemented as a standalone package with SSE reload, rebuild coalescing, `start_paths`, and output-dir exclusion. See link:LICENSE[].
+
+== Contact
+
+Antora Supplemental — support@antora-supplemental.org
+
+* Project: https://github.com/antora-supplemental/antora-serve
+* Site: https://antora-supplemental.org
