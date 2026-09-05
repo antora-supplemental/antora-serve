@@ -8,6 +8,9 @@ ifdef::env-github[]
 ++++
 <a id="readme-top"></a>
 <div align="center">
+<a href="https://docs.antora-supplemental.org/docs/index.html"><img src="https://img.shields.io/badge/docs-Antora%20Supplemental-6366f1?style=for-the-badge" alt="Docs"></a>
+<a href="https://github.com/antora-supplemental/antora-serve/actions/workflows/ci.yml"><img src="https://github.com/antora-supplemental/antora-serve/actions/workflows/ci.yml/badge.svg?style=for-the-badge" alt="CI"></a>
+<br />
 <a href="https://github.com/antora-supplemental/antora-serve/graphs/contributors"><img src="https://img.shields.io/github/contributors/antora-supplemental/antora-serve.svg?style=for-the-badge" alt="Contributors"></a>
 <a href="https://github.com/antora-supplemental/antora-serve/network/members"><img src="https://img.shields.io/github/forks/antora-supplemental/antora-serve.svg?style=for-the-badge" alt="Forks"></a>
 <a href="https://github.com/antora-supplemental/antora-serve/stargazers"><img src="https://img.shields.io/github/stars/antora-supplemental/antora-serve.svg?style=for-the-badge" alt="Stars"></a>
@@ -27,30 +30,8 @@ Local Antora generate+serve+watch with live reload (standalone; not a core fork)
 endif::[]
 
 ifndef::env-github[]
-
-ifdef::env-github[]
-++++
-<a id="readme-top"></a>
-<div align="center">
-<a href="https://github.com/antora-supplemental/antora-serve/graphs/contributors"><img src="https://img.shields.io/github/contributors/antora-supplemental/antora-serve.svg?style=for-the-badge" alt="Contributors"></a>
-<a href="https://github.com/antora-supplemental/antora-serve/network/members"><img src="https://img.shields.io/github/forks/antora-supplemental/antora-serve.svg?style=for-the-badge" alt="Forks"></a>
-<a href="https://github.com/antora-supplemental/antora-serve/stargazers"><img src="https://img.shields.io/github/stars/antora-supplemental/antora-serve.svg?style=for-the-badge" alt="Stars"></a>
-<a href="https://github.com/antora-supplemental/antora-serve/issues"><img src="https://img.shields.io/github/issues/antora-supplemental/antora-serve.svg?style=for-the-badge" alt="Issues"></a>
-<a href="https://github.com/antora-supplemental/antora-serve/blob/main/LICENSE"><img src="https://img.shields.io/github/license/antora-supplemental/antora-serve.svg?style=for-the-badge" alt="License"></a>
-<br />
-<h3 align="center">@antora-supplemental/serve</h3>
-<p align="center">
-Local Antora generate+serve+watch with live reload (standalone; not a core fork).
-<br /><br />
-<a href="https://github.com/antora-supplemental/antora-serve/issues">Report Bug</a>
-&middot;
-<a href="https://github.com/antora-supplemental/antora-serve/issues">Request Feature</a>
-</p>
-</div>
-++++
-endif::[]
-
-ifndef::env-github[]
+image:https://img.shields.io/badge/docs-Antora%20Supplemental-6366f1?style=for-the-badge[Docs,link=https://docs.antora-supplemental.org/docs/index.html]
+image:https://github.com/antora-supplemental/antora-serve/actions/workflows/ci.yml/badge.svg?style=for-the-badge[CI,link=https://github.com/antora-supplemental/antora-serve/actions/workflows/ci.yml]
 image:https://img.shields.io/github/contributors/antora-supplemental/antora-serve.svg?style=for-the-badge[Contributors,link=https://github.com/antora-supplemental/antora-serve/graphs/contributors]
 image:https://img.shields.io/github/forks/antora-supplemental/antora-serve.svg?style=for-the-badge[Forks,link=https://github.com/antora-supplemental/antora-serve/network/members]
 image:https://img.shields.io/github/stars/antora-supplemental/antora-serve.svg?style=for-the-badge[Stars,link=https://github.com/antora-supplemental/antora-serve/stargazers]
@@ -83,7 +64,7 @@ Upstream prefers an unimplemented CLI plugin system over a small `serve` command
 ++++
 == Installation
 
-Requires Node 18+ and Antora 3.1+ already in the project (peer dependency).
+Requires Node 20+ and Antora 3.1+ already in the project (peer dependency; dev/test toolchain tracks Antora 3.2).
 
 [source,shell]
 ----

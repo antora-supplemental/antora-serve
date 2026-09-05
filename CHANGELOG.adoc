@@ -4,6 +4,7 @@ This document tracks published releases. Detail files live under `changelog-deta
 
 == Timeline
 
+* link:changelog-details/2026-09-05%20-%20antora%203.2%20dev%20deps.adoc[2026-09-05 — Antora 3.2 dev dependencies]
 * link:changelog-details/2026-07-25%20-%20initial%20serve%20cli.adoc[2026-07-25 — Initial serve CLI (v0.1.0)]
 
 == [0.1.0]
