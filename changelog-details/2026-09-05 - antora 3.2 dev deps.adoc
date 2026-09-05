@@ -1,0 +1,20 @@
+= 2026-09-05 — Antora 3.2 dev dependencies
+
+Dependabot bump of the grouped Antora dev toolchain from 3.1.15 to 3.2.0.
+
+== Changes
+
+* Dev dependencies: `antora`, `@antora/playbook-builder`, and `@antora/site-generator` → `^3.2.0`.
+* Antora 3.2 requires Node.js 20+; align `package.json` `engines` and README installation notes.
+* Peer dependencies remain `>=3.1.0` so consumers on Antora 3.1.x are still supported.
+
+== Upstream highlights (Antora 3.2.0)
+
+* Node.js 16/18 dropped; Node 20+ required.
+* `playbook-builder`: `antoraVersion` property, `--stacktrace` maps to `runtime.stacktrace`.
+* `js-yaml` upgraded to 5.x across playbook-builder, content-aggregator, and ui-loader.
+* Logger simplified (pino 10; `pino-pretty` removed from default pipeline).
+
+== Verification
+
+* `pnpm test` passes on Node 20, 22, and 24 (CI matrix).
