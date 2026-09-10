@@ -72,7 +72,7 @@ This is the feature core Antora rejected as `antora serve` (see https://gitlab.c
 
 Status:: v0.1 — local watch + live reload. With `@antora-supplemental/incremental`, dirty-set partial reconvert when a prior `.antora-deps.json` exists (else full regenerate). Remote git content sources are not polled.
 
-Architecture (link from PRs):: docs hub page `site-rebuild.adoc` (Site rebuild v1/v2).
+Architecture (link from PRs):: docs hub pages `site-rebuild.adoc` (Site rebuild v1/v2) and `live-docs.adoc` (Antora Live — DB collab authoring, separate product).
 
 Antora's composed multi-repo site *is* the product authors need to preview.
 IDE single-file AsciiDoc preview and UI-bundle gulp reload do not replace that.

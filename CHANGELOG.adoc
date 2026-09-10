@@ -4,6 +4,7 @@ This document tracks published releases. Detail files live under `changelog-deta
 
 == Timeline
 
+* 2026-09-10 — README Architecture pointer to hub `live-docs.adoc` (Antora Live design)
 * link:changelog-details/2026-07-25%20-%20initial%20serve%20cli.adoc[2026-07-25 — Initial serve CLI (v0.1.0)]
 
 == [0.1.0]
