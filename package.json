@@ -38,10 +38,10 @@
     "serve:demo": "node bin/antora-serve.js test/fixtures/playbook.yml --port 5252"
   },
   "devDependencies": {
-    "@antora/playbook-builder": "^3.1.15",
-    "@antora/site-generator": "^3.1.15",
+    "@antora/playbook-builder": "^3.2.1",
+    "@antora/site-generator": "^3.2.1",
     "@antora/user-require-helper": "^3.0.0",
-    "antora": "^3.1.15"
+    "antora": "^3.2.1"
   },
   "peerDependencies": {
     "@antora/playbook-builder": ">=3.1.0",
