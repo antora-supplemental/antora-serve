@@ -16,3 +16,5 @@
 !changelog-details/
 !changelog-details/**
 node_modules/
+!/.editorconfig
+!/.gitattributes
